@@ -1,5 +1,21 @@
 import pandas as pd
+import os
 
-dataframe_sympla = pd.read_csv('/Users/willianribeiro/Documents/GitHub/enriquecimento-dados-sympla/Data/base_produtores_v5.csv')
+caminho_pasta = '/Users/willianribeiro/Documents/GitHub/enriquecimento-dados-sympla/Data/Dados-IBGE/COMPOSICAO-POPULACAO'
 
-dataframe_sympla.head()
+nomes_arquivos = []
+
+def insere_dados_sql(caminho_pasta):
+    for nome_do_arquivo in os.listdir(caminho_pasta):
+        if str(nome_do_arquivo).endswith('xlsx'):
+            caminho_completo = os.path.join(caminho_pasta, nome_do_arquivo)
+            nomes_arquivos.append(caminho_completo)
+        
+    
+    return nomes_arquivos
+
+insere_dados_sql(caminho_pasta)
+
+for nome in nomes_arquivos:
+    print(nome)
+
