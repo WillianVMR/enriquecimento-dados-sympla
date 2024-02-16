@@ -1,0 +1,5 @@
+{
+    "dados_composicao_ibge_path": "Data/Dados-IBGE/COMPOSICAO-POPULACAO",
+    "dados_pib_ibge_path": "Data/Dados-IBGE/PIB",
+    "dados_sympla_eventos_path": "Data/sympla/base_produtores_v5.csv"
+}

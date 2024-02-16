@@ -1,0 +1,5 @@
+{
+    "database_ibge_isolated_uri": "sqlite:///Database/ibge_data_structured.sqlite3",
+    "database_sympla_isolated_uri": "sqlite:///Database/sympla_data.sqlite3",
+    "database_sympla_and_ibge_uri": "sqlite:///Database/sympla_ibge_composed_data.sqlite3"
+}
