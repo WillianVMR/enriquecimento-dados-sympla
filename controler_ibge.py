@@ -27,7 +27,9 @@ Seja DataLoaderPIB o ETL configurado para absorver os arquivos separados de PIB 
 # Carregamento de dados da composição
 data_loader_composicao = DataLoaderComposicao(folder_path=dados_composicao_ibge_path, database_uri=database_sympla_and_ibge_uri)
 data_loader_composicao.process()
+print('Dados de Composição populacional do IBGE atualizados')
 
 # Carregamento de dados do PIB
 data_loader_pib = DataLoaderPIB(folder_path=dados_pib_ibge_path, database_uri=database_sympla_and_ibge_uri)
 data_loader_pib.process()
+print('Dados de PIB do IBGE atualizados')

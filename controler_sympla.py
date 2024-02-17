@@ -25,3 +25,4 @@ Seja DataLoaderSympla o ETL configurado para absorver os arquivos provenientes d
 # Carregamento de dados da sympla
 data_loader_sympla = DataLoaderSympla(folder_path=dados_sympla_eventos_path, database_uri=database_sympla_and_ibge_uri)
 data_loader_sympla.process()
+print('Dados da Sympla atualizados')
