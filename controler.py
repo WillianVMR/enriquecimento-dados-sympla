@@ -1,2 +1,18 @@
 from packages.database_access_package.database_access_loader import ConfigLoaderSqlite
 from packages.raw_data_access_package.raw_data_access_loader import ConfigLoaderRaw
+from packages.ibge_data_extractor_package.ibge_data_loader import DataLoaderComposicao
+from packages.ibge_data_extractor_package.ibge_data_loader import DataLoaderPIB
+
+# Declaração das classes para armazenamento dos acessos
+# Bancos de dados
+config_loader_sqlite = ConfigLoaderSqlite('config/database_access.json')
+database_ibge_isolated_uri = config_loader_sqlite.database_ibge_isolated_uri
+database_sympla_isolated_uri = config_loader_sqlite.database_sympla_isolated_uri
+database_sympla_and_ibge_uri = config_loader_sqlite.database_sympla_and_ibge_uri
+
+# Dados brutos da extração
+config_loader_raw = ConfigLoaderRaw('config/data_access.json')
+dados_composicao_ibge_path = config_loader_raw.dados_composicao_ibge_path
+dados_pib_ibge_path = config_loader_raw.dados_pib_ibge_path
+dados_sympla_eventos_path = config_loader_raw.dados_sympla_eventos_path
+
