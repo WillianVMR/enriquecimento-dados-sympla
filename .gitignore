@@ -1,2 +1,6 @@
 /Database/sympla_ibge_composed_data.sqlite3
 /Data/sympla
+*.pyc
+*.pyo
+__pycache__/
+*/__pycache__/

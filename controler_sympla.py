@@ -1,6 +1,6 @@
 from packages.database_access_package.database_access_loader import ConfigLoaderSqlite
 from packages.raw_data_access_package.raw_data_access_loader import ConfigLoaderRaw
-from packages.sympla_data_extractor_package.sympla_data_loader import DataLoaderSympla
+from packages.sympla_pandas_data_extractor_package.sympla_data_loader import DataLoaderSympla
 
 # Declaração das classes para armazenamento dos acessos
 ''' 
