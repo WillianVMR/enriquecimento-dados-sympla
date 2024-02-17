@@ -18,10 +18,11 @@ class DataLoaderPIB:
     
     def load_data_from_files(self):
         for file_path in self.file_paths:
-            temp_df = pd.read_excel(file_path, skiprows=7, skipfooter=1, header=None)
+            # Tive que alterar a engine de leitura para 'openpyxl' para os arquivos com extensão .xlsx
+            temp_df = pd.read_excel(file_path, engine='openpyxl')
             self.dataset = pd.concat([self.dataset, temp_df], ignore_index=True)
             self.filtered_dataset = self.dataset.iloc[:, [0, 1, 2, 3, 4, 5, 6, 7, 38, 39, 40, 41, 42]]
-        self.filtered_dataset.columns = ['ano', 'codigo_grande_regiao', 'nome_grande_regiao', 'codigo_uf', 'sigla_uf', 'nome_uf', 'codigo_municipio', 'nome_municipio', ]
+        self.filtered_dataset.columns = ['ano', 'codigo_grande_regiao', 'nome_grande_regiao', 'codigo_uf', 'sigla_uf', 'nome_uf', 'codigo_municipio', 'nome_municipio', 'pib_bruto', 'pip_per_capta', 'atividade_principal_contribuicao', 'atividade_secundaria_contribuicao', 'atividade_tercearia_contribuicao']
     
     def save_to_sql(self):
         engine = create_engine(self.database_uri)
@@ -60,7 +61,8 @@ class DataLoaderComposicao:
     
     def load_data_from_files(self):
         for file_path in self.file_paths:
-            temp_df = pd.read_excel(file_path, header=None)
+            # Tive que alterar a engine de leitura para 'openpyxl' para os arquivos com extensão .xlsx
+            temp_df = pd.read_excel(file_path, skiprows=7, skipfooter=1, header=None, engine='openpyxl')
             self.dataset = pd.concat([self.dataset, temp_df], ignore_index=True)
         self.dataset.columns = ['nivel', 'codigo', 'nome_unidade', 'idade', 'homens', 'mulheres']
     
