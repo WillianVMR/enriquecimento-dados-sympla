@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix ETL Control Panel</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            text-align: center; /* Center content */
+        }
+        
+        #title {
+            margin: 20px 0; /* Added margin for spacing */
+            font-size: 24px;
+        }
+
+        #control-panel {
+            display: inline-flex; /* Align buttons in a row */
+            justify-content: center; /* Center buttons horizontally */
+            gap: 10px; /* Space between buttons */
+        }
+        
+        button {
+            background-color: #003300;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #005500;
+        }
+        
+        #output-box {
+            margin: 20px;
+            padding: 20px;
+            background-color: #001a00;
+            border: 1px solid #0f0;
+            min-height: 100px;
+            white-space: pre-wrap; /* Ensures the text respects line breaks and white spaces. */
+        }
+    </style>
+</head>
+<body>
+    <div id="title">Sympla - Sirius - ETL</div>
+    <div id="control-panel">
+        
+        <button id="run-etl-1" onclick="runETLScript('ETL 1')">Run ETL Script 1</button>
+        <button id="run-etl-2" onclick="runETLScript('ETL 2')">Run ETL Script 2</button>
+        <button id="run-etl-3" onclick="runETLScript('ETL 3')">Run ETL Script 3</button>
+    </div>
+    <div id="output-box"></div>
+
+    <script>
+        async function runETLScript(scriptName) {
+            const output = document.getElementById('output-box');
+            const response = await fetch('/run_etl_script', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ scriptName }),
+            });
+            const data = await response.text();
+            output.textContent = data;
+        }
+    </script>
+</body>
+</html>
