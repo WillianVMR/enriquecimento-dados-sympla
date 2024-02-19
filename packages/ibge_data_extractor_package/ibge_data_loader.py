@@ -35,27 +35,8 @@ class DataLoaderPIB:
     
     def save_to_sql(self):
         engine = create_engine(self.database_uri)
-        
-        # Create dimensao_cidades table
-        self.citie_dimension_table.to_sql('dimensao_cidades', con=engine, if_exists='replace', index=False)
-        
-        # Create dados_pib table with foreign key constraint
-        create_pib_table_query = '''
-        CREATE TABLE IF NOT EXISTS dados_pib (
-            codigo_municipio INTEGER,
-            pib_bruto FLOAT,
-            pip_per_capta FLOAT,
-            atividade_principal_contribuicao TEXT,
-            atividade_secundaria_contribuicao TEXT,
-            atividade_tercearia_contribuicao TEXT,
-            FOREIGN KEY (codigo_municipio) REFERENCES dimensao_cidades(codigo_municipio)
-        );
-        '''
-        with engine.connect() as conn:
-            conn.execute(create_pib_table_query)
-        
-        # Insert data into dados_pib table
-        self.pib_table.to_sql('dados_pib', con=engine, if_exists='replace', index=False)
+        self.filtered_dataset.to_sql('dimensao_cidades', con=engine, if_exists='replace', index=False)
+        self.filtered_dataset.to_sql('dados_pib', con=engine, if_exists='replace', index=False)
     
     def process(self):
         self.find_excel_files()
