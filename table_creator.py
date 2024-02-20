@@ -93,4 +93,4 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS ft_eventos (
 conn.commit()
 conn.close()
 
-print("Tables created successfully.")
+print("Tabelas criadas com sucesso")
