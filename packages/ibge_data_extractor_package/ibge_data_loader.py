@@ -35,8 +35,8 @@ class DataLoaderPIB:
     
     def save_to_sql(self):
         engine = create_engine(self.database_uri)
-        self.filtered_dataset.to_sql('dimensao_cidades', con=engine, if_exists='replace', index=False)
-        self.filtered_dataset.to_sql('dados_pib', con=engine, if_exists='replace', index=False)
+        self.citie_dimension_table.to_sql('dimensao_cidades', con=engine, if_exists='replace', index=False)
+        self.pib_table.to_sql('dados_pib', con=engine, if_exists='replace', index=False)
     
     def process(self):
         self.find_excel_files()
