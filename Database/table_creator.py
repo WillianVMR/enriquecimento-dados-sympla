@@ -1,12 +1,12 @@
-from packages.database_access_package.database_access_loader import ConfigLoaderSqlite
+#from packages.database_access_package.database_access_loader import ConfigLoaderSqlite
 import sqlite3
 
 # Declarando conexão ao banco
-database_connection = ConfigLoaderSqlite('config/database_access.json')
-database_sympla_and_ibge_uri = database_connection.database_sympla_and_ibge_uri
+#database_connection = ConfigLoaderSqlite('config/database_access.json')
+#database_sympla_and_ibge_uri = database_connection.database_sympla_and_ibge_uri
 
 # Conectando ao SQLite database (criando se não existe)
-conn = sqlite3.connect(database_sympla_and_ibge_uri)
+conn = sqlite3.connect('sympla_ibge_composed_data.sqlite3')
 cursor = conn.cursor()
 
 # Criando tabela 'dim_tipo_evento'
