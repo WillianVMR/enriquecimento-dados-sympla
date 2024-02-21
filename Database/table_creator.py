@@ -11,33 +11,33 @@ cursor = conn.cursor()
 
 # Criando tabela 'dim_tipo_evento'
 cursor.execute('''CREATE TABLE IF NOT EXISTS dim_tipo_evento (
-                    id_tipo_evento INTEGER PRIMARY KEY,
+                    id_tipo_evento INTEGER PRIMARY KEY AUTOINCREMENT,
                     ds_tipo_ingresso TEXT NOT NULL
                     )''')
 
 # Criando tabela 'dim_segmento'
 cursor.execute('''CREATE TABLE IF NOT EXISTS dim_segmento (
-                    id_segmento INTEGER PRIMARY KEY,
+                    id_segmento INTEGER PRIMARY KEY AUTOINCREMENT,
                     ds_segmento_evento TEXT NOT NULL
                     )''')
 
 # Criando tabela 'dim_categoria'
 cursor.execute('''CREATE TABLE IF NOT EXISTS dim_categoria (
-                    id_categoria INTEGER PRIMARY KEY,
+                    id_categoria INTEGER PRIMARY KEY AUTOINCREMENT,
                     ds_categoria_evento TEXT NOT NULL
                     )''')
 
 # Criando tabela 'dim_grupo_produtor'
 cursor.execute('''CREATE TABLE IF NOT EXISTS dim_grupo_produtor (
-                    id_grupo INTEGER PRIMARY KEY,
+                    id_grupo INTEGER PRIMARY KEY AUTOINCREMENT,
                     ds_grupo_produtor TEXT NOT NULL
                     )''')
 
 # Criando tabela 'dim_produtor'
 cursor.execute('''CREATE TABLE IF NOT EXISTS dim_produtor (
-                    id_produtor INTEGER PRIMARY KEY,
+                    id_produtor INTEGER PRIMARY KEY AUTOINCREMENT,
                     id_grupo INTEGER,
-                    FOREIGN KEY (id_grupo) REFERENCES dim_grupo_produtor(id_grupo)
+                    FOREIGN KEY (id_grupo) REFERENCES dim_grupo_produtor(id_grupo) ON DELETE CASCADE
                     )''')
 
 # Criando tabela 'dim_atividades'
@@ -56,25 +56,23 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS dim_cidades (
                     atividade_principal_contribuicao INTEGER,
                     atividade_secundaria_contribuicao INTEGER,
                     atividade_tercearia_contribuicao INTEGER,
-                    FOREIGN KEY (atividade_principal_contribuicao) REFERENCES dim_atividades(id_atividade),
-                    FOREIGN KEY (atividade_secundaria_contribuicao) REFERENCES dim_atividades(id_atividade),
-                    FOREIGN KEY (atividade_tercearia_contribuicao) REFERENCES dim_atividades(id_atividade)
+                    FOREIGN KEY (atividade_principal_contribuicao) REFERENCES dim_atividades(id_atividade) ON DELETE CASCADE,
+                    FOREIGN KEY (atividade_secundaria_contribuicao) REFERENCES dim_atividades(id_atividade) ON DELETE CASCADE,
+                    FOREIGN KEY (atividade_tercearia_contribuicao) REFERENCES dim_atividades(id_atividade) ON DELETE CASCADE
                     )''')
 
 # Criando tabela 'dim_comp_PIB'
 cursor.execute('''CREATE TABLE IF NOT EXISTS dim_comp_PIB (
                     id_cidade INTEGER,
-                    nivel TEXT NOT NULL,
-                    nome_unidade TEXT NOT NULL,
                     idade TEXT NOT NULL,
                     homens INTEGER,
                     mulheres INTEGER,
-                    FOREIGN KEY (id_cidade) REFERENCES dim_cidades(id_cidade)
+                    FOREIGN KEY (id_cidade) REFERENCES dim_cidades(id_cidade) ON DELETE CASCADE
                     )''')
 
 # Criando tabela 'ft_eventos'
 cursor.execute('''CREATE TABLE IF NOT EXISTS ft_eventos (
-                    id_evento INTEGER PRIMARY KEY,
+                    id_evento VARCHAR PRIMARY KEY,
                     id_produtor INTEGER,
                     id_categoria INTEGER,
                     id_segmento INTEGER,
