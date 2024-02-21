@@ -3,6 +3,8 @@ import os
 from sqlalchemy import create_engine
 import numpy as np
 
+from sqlalchemy.types import Integer, Text, Float, String
+
 class DataLoaderSympla:
     def __init__(self, folder_path_sympla, folder_path_ibge_pib, folder_path_ibge_composicao, database_uri):
         self.folder_path_sympla = folder_path_sympla
@@ -107,12 +109,16 @@ class DataLoaderSympla:
         merged_ft_eventos = merged_ft_eventos.merge(self.dim_segmento, left_on='ds_segmento_evento', right_on='ds_segmento_evento', how='left')
         merged_ft_eventos = merged_ft_eventos.merge(self.dim_tipo_evento, left_on='ds_tipo_evento', right_on='ds_tipo_evento', how='left')
         merged_ft_eventos['nm_cidade_evento'] = merged_ft_eventos['nm_cidade_evento'].str.upper()
+        merged_ft_eventos['nm_cidade_evento'] = merged_ft_eventos['nm_cidade_evento'].str.strip()
+        self.cities_projection['nome_municipio'] = self.cities_projection['nome_municipio'].str.upper()
+        self.cities_projection['nome_municipio'] = self.cities_projection['nome_municipio'].str.strip()
         merged_ft_eventos = merged_ft_eventos.merge(self.cities_projection, left_on='nm_cidade_evento', right_on='nome_municipio', how='left')
         
         self.ft_eventos = merged_ft_eventos[['id_produtor', 'id_evento', 'id_categoria', 'id_segmento', 'id_tipo_evento', 'codigo_municipio', 'ds_tipo_ingresso', 'fg_ingresso_gratuito', 'vr_ingresso', 'vr_taxa_sympla', 'qt_ingresso_disponibilizado',
        'qt_ingresso_vendido', 'dt_evento']]
         self.ft_eventos.columns = ['id_produtor', 'id_evento', 'id_categoria', 'id_segmento', 'id_tipo_evento', 'id_cidade_evento', 'ds_tipo_ingresso', 'fg_ingresso_gratuito', 'vr_ingresso', 'vr_taxa_sympla', 'qt_ingresso_disponibilizado',
        'qt_ingresso_vendido', 'dt_evento']
+        
         
         
     def save_to_sql(self):
@@ -122,7 +128,23 @@ class DataLoaderSympla:
         self.dim_categoria.to_sql('dim_categoria', con=engine, if_exists='replace', index=False)
         self.dim_segmento.to_sql('dim_segmento', con=engine, if_exists='replace', index=False)
         self.dim_tipo_evento.to_sql('dim_tipo_evento', con=engine, if_exists='replace', index=False)
-        self.ft_eventos.to_sql('ft_eventos', con=engine, if_exists='replace', index=False)
+        
+        dtypes = {
+                'id_produtor': Text,
+                'id_evento': Integer,
+                'id_categoria': Integer,
+                'id_segmento': Integer,
+                'id_tipo_evento': Integer,
+                'id_cidade_evento': Integer,
+                'ds_tipo_ingresso': Text,
+                'fg_ingresso_gratuito': Integer,
+                'vr_ingresso': Float,  # Use Float for real numbers
+                'vr_taxa_sympla': Float,  # Use Float for real numbers
+                'qt_ingresso_disponibilizado': Integer,
+                'qt_ingresso_vendido': Integer,
+                'dt_evento': Text
+            }
+        self.ft_eventos.to_sql('ft_eventos', con=engine, if_exists='replace', index=False, dtype=dtypes)
     
     def process(self):
         self.find_csv_files()
