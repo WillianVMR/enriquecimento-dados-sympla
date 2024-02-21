@@ -23,6 +23,6 @@ dados_sympla_eventos_path = config_loader_raw.dados_sympla_eventos_path
 Seja DataLoaderSympla o ETL configurado para absorver os arquivos provenientes da Query do banco de dados da Sympla
 '''
 # Carregamento de dados da sympla
-data_loader_sympla = DataLoaderSympla(folder_path=dados_sympla_eventos_path, database_uri=database_sympla_and_ibge_uri)
+data_loader_sympla = DataLoaderSympla(folder_path_sympla=dados_sympla_eventos_path, folder_path_ibge_pib=dados_pib_ibge_path, folder_path_ibge_composicao=dados_composicao_ibge_path, database_uri=database_sympla_and_ibge_uri)
 data_loader_sympla.process()
 print('Dados da Sympla atualizados')

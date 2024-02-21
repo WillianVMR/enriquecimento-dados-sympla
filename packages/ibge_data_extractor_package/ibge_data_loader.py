@@ -30,7 +30,7 @@ class DataLoaderPIB:
             self.dataset = pd.concat([self.dataset, temp_df], ignore_index=True)
             self.filtered_dataset = self.dataset.iloc[:, [0, 1, 2, 3, 4, 5, 6, 7, 38, 39, 40, 41, 42]]
         self.filtered_dataset.columns = ['ano', 'codigo_grande_regiao', 'nome_grande_regiao', 'codigo_uf', 'sigla_uf', 'nome_uf', 'codigo_municipio', 'nome_municipio', 'pib_bruto', 'pip_per_capta', 'atividade_principal_contribuicao', 'atividade_secundaria_contribuicao', 'atividade_tercearia_contribuicao']
-        
+        self.filtered_dataset = self.filtered_dataset[self.filtered_dataset['ano'] == 2021]
         
     def create_tables(self):
         # Criação da tabela de dimensao das atividades
@@ -51,11 +51,11 @@ class DataLoaderPIB:
         temporary_cities_dimension.columns = ['id_cidade', 'nm_cidade', 'Sigla_UF', 'pib_bruto', 'pip_per_capta', 'atividade_principal_contribuicao_rotulo', 'atividade_secundaria_contribuicao_rotulo', 'atividade_tercearia_contribuicao_rotulo']
         merged_cities_dimension = temporary_cities_dimension.merge(self.dim_atividades, left_on='atividade_principal_contribuicao_rotulo', right_on='descricao_atividade', how='left')
         merged_cities_dimension.rename(columns={'id_atividade': 'atividade_principal_contribuicao'}, inplace=True)
-        merged_cities_dimension = temporary_cities_dimension.merge(self.dim_atividades, left_on='atividade_secundaria_contribuicao_rotulo', right_on='descricao_atividade', how='left')
+        merged_cities_dimension = merged_cities_dimension.merge(self.dim_atividades, left_on='atividade_secundaria_contribuicao_rotulo', right_on='descricao_atividade', how='left')
         merged_cities_dimension.rename(columns={'id_atividade': 'atividade_secundaria_contribuicao'}, inplace=True)
-        merged_cities_dimension = temporary_cities_dimension.merge(self.dim_atividades, left_on='atividade_tercearia_contribuicao_rotulo', right_on='descricao_atividade', how='left')
+        merged_cities_dimension = merged_cities_dimension.merge(self.dim_atividades, left_on='atividade_tercearia_contribuicao_rotulo', right_on='descricao_atividade', how='left')
         merged_cities_dimension.rename(columns={'id_atividade': 'atividade_tercearia_contribuicao'}, inplace=True)
-        self.dim_cidades = merged_cities_dimension
+        self.dim_cidades = merged_cities_dimension[['id_cidade', 'nm_cidade', 'Sigla_UF', 'pib_bruto', 'pip_per_capta', 'atividade_principal_contribuicao', 'atividade_secundaria_contribuicao', 'atividade_tercearia_contribuicao']]
         
         
         
