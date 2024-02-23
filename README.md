@@ -7,10 +7,4 @@ Para instalar as bibliotecas necessárias use no terminal:
 
 pip install -r requirements.txt
 
-Pegar valores unicos de:
-
-- Categoria
-
-- Segmento
-
-- Tipo de Evento
+Para usar o aplicativo use o comando python app.py no folder base
