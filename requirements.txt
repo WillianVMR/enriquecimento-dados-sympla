@@ -25,7 +25,7 @@ pyspark==3.5.0
 python-dateutil==2.8.2
 pytz==2024.1
 PyYAML==6.0.1
-requests==2.31.0
+requests==2.32.2
 six==1.16.0
 SQLAlchemy==2.0.27
 sqlglot==21.1.1
